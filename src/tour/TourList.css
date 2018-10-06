@@ -1,0 +1,7 @@
+.ant-carousel .slick-slide {
+    text-align: center;
+    overflow: hidden;
+  }
+  .slick-dots li button{
+    background-color: red !important;
+  }

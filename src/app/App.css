@@ -1,0 +1,19 @@
+.app-content {
+  margin-top: 64px;   
+}
+.ant-layout-footer{
+  padding: 0;
+}
+.owl-item{
+  display: flex;
+  justify-content: center;
+}
+.custom-select-form{
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+  padding: 6px;
+  font-size: 0.875rem;
+}
+.custom-select-form div div.wide.ant-select.ant-select-enabled{
+  width: 100% !important;
+}
