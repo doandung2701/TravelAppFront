@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
-import { login } from '../../util/APIUtils';
 import './Login.css';
 import { Link } from 'react-router-dom';
-import { ACCESS_TOKEN } from '../../constants';
-
+import {login} from '../../actions/user.actions';
 import { Form, Input, Button, Icon, notification } from 'antd';
+import {connect} from "react-redux";
 const FormItem = Form.Item;
-
 class Login extends Component {
-    render() {
+   constructor(props) {
+       super(props)
+       this.loginSuccess=this.loginSuccess.bind(this);
+
+   }
+   loginSuccess(){
+    console.log(this.props);
+       this.props.history.push("/");
+   }
+    render(props) {
         const AntWrappedLoginForm = Form.create()(LoginForm)
         return (
             <div className="login-container">
                 <h1 className="page-title">Login</h1>
                 <div className="login-content">
-                    <AntWrappedLoginForm onLogin={this.props.onLogin} />
+                    <AntWrappedLoginForm err={this.props.err} onLogin={this.props.login} onSuccess={this.loginSuccess} />
                 </div>
             </div>
         );
@@ -28,16 +35,16 @@ class LoginForm extends Component {
     }
 
     handleSubmit(event) {
-        event.preventDefault();   
+        event.preventDefault(); 
+         
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 const loginRequest = Object.assign({}, values);
-                login(loginRequest)
-                .then(response => {
-                    localStorage.setItem(ACCESS_TOKEN, response.accessToken);
-                    this.props.onLogin();
-                }).catch(error => {
-                    if(error.status === 401) {
+                this.props.onLogin(loginRequest);
+                if(this.props.err){
+                    console.log("CO error");
+                    console.log(this.props.err);
+                    if(this.props.err.status === 401) {
                         notification.error({
                             message: 'Polling App',
                             description: 'Your Username or Password is incorrect. Please try again!'
@@ -45,11 +52,19 @@ class LoginForm extends Component {
                     } else {
                         notification.error({
                             message: 'Polling App',
-                            description: error.message || 'Sorry! Something went wrong. Please try again!'
+                            description: this.props.err.message || 'Sorry! Something went wrong. Please try again!'
                         });                                            
                     }
-                });
+                }
+                else{
+                    notification.success({
+                        message: 'Polling App',
+                        description: 'Login success!'
+                    }); 
+                    this.props.onSuccess();
+                }
             }
+           
         });
     }
 
@@ -88,6 +103,15 @@ class LoginForm extends Component {
         );
     }
 }
+const mapStateToProps = (state, ownProps) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    isLoading: state.auth.isLoading,
+    err:state.auth.err
+})
 
-
-export default Login;
+const mapDispatchToProps =dispatch=> {
+    return {
+        login:loginRequest=>dispatch(login(loginRequest))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

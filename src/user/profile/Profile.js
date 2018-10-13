@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PollList from '../../poll/PollList';
-import { getUserProfile } from '../../util/APIUtils';
 import { Avatar, Tabs } from 'antd';
 import { getAvatarColor } from '../../util/Colors';
 import { formatDate } from '../../util/Helpers';
@@ -8,66 +7,43 @@ import LoadingIndicator  from '../../common/LoadingIndicator';
 import './Profile.css';
 import NotFound from '../../common/NotFound';
 import ServerError from '../../common/ServerError';
-
+import {connect} from "react-redux";
+import { getUserProfile } from '../../actions/user.actions';
 const TabPane = Tabs.TabPane;
-
 class Profile extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            user: null,
-            isLoading: false
-        }
         this.loadUserProfile = this.loadUserProfile.bind(this);
+        console.log(this.props);
     }
 
     loadUserProfile(username) {
-        this.setState({
-            isLoading: true
-        });
 
-        getUserProfile(username)
-        .then(response => {
-            this.setState({
-                user: response,
-                isLoading: false
-            });
-        }).catch(error => {
-            if(error.status === 404) {
-                this.setState({
-                    notFound: true,
-                    isLoading: false
-                });
-            } else {
-                this.setState({
-                    serverError: true,
-                    isLoading: false
-                });        
-            }
-        });        
+
+        this.props.getUserProfile(username);
+        
     }
       
     componentDidMount() {
-        const username = this.props.match.params.username;
-        this.loadUserProfile(username);
+        this.loadUserProfile(this.props.match.params.username);
     }
 
-    componentWillReceiveProps(nextProps) {
-        if(this.props.match.params.username !== nextProps.match.params.username) {
-            this.loadUserProfile(nextProps.match.params.username);
-        }        
-    }
+    // componentWillReceiveProps(nextProps) {
+    //     if(this.props.match.params.username !== nextProps.match.params.username) {
+    //         this.loadUserProfile(nextProps.match.params.username);
+    //     }        
+    // }
 
     render() {
-        if(this.state.isLoading) {
+        if(this.props.isLoading) {
             return <LoadingIndicator />;
         }
 
-        if(this.state.notFound) {
+        if(this.props.notFound) {
             return <NotFound />;
         }
 
-        if(this.state.serverError) {
+        if(this.props.serverError) {
             return <ServerError />;
         }
 
@@ -78,19 +54,19 @@ class Profile extends Component {
         return (
             <div className="profile">
                 { 
-                    this.state.user ? (
+                    this.props.user ? (
                         <div className="user-profile">
                             <div className="user-details">
                                 <div className="user-avatar">
-                                    <Avatar className="user-avatar-circle" style={{ backgroundColor: getAvatarColor(this.state.user.name)}}>
-                                        {this.state.user.name[0].toUpperCase()}
+                                    <Avatar className="user-avatar-circle" style={{ backgroundColor: getAvatarColor(this.props.user.name)}}>
+                                        {this.props.user.name[0].toUpperCase()}
                                     </Avatar>
                                 </div>
                                 <div className="user-summary">
-                                    <div className="full-name">{this.state.user.name}</div>
-                                    <div className="username">@{this.state.user.username}</div>
+                                    <div className="full-name">{this.props.user.name}</div>
+                                    <div className="username">@{this.props.user.username}</div>
                                     <div className="user-joined">
-                                        Joined {formatDate(this.state.user.joinedAt)}
+                                        Joined {formatDate(this.props.user.joinedAt)}
                                     </div>
                                 </div>
                             </div>
@@ -100,10 +76,10 @@ class Profile extends Component {
                                     tabBarStyle={tabBarStyle}
                                     size="large"
                                     className="profile-tabs">
-                                    <TabPane tab={`${this.state.user.pollCount} wishlist`} key="1">
+                                    <TabPane tab={`${this.props.user.pollCount} wishlist`} key="1">
                                         <PollList username={this.props.match.params.username} type="USER_WISHED" />
                                     </TabPane>
-                                    <TabPane tab={`${this.state.user.voteCount} booking`}  key="2">
+                                    <TabPane tab={`${this.props.user.voteCount} booking`}  key="2">
                                         <PollList username={this.props.match.params.username} type="USER_BOOKED" />
                                     </TabPane>
                                     <TabPane tab="update profile" key="3">
@@ -118,5 +94,16 @@ class Profile extends Component {
         );
     }
 }
+const mapStateToProps = (state, ownProps) => ({
+    user:state.auth.userProfle,
+    notfound:state.auth.notfound,
+    serverError:state.auth.server_error,
+    isLoading:state.auth.isLoading
+})
+ const mapDispatchToProps =dispatch=> {
+     return {
+        getUserProfile:username=>dispatch(getUserProfile(username))
 
-export default Profile;
+     }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

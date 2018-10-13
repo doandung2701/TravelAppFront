@@ -5,12 +5,7 @@ import {
   withRouter,
   Switch
 } from 'react-router-dom';
-
-import { getCurrentUser } from '../util/APIUtils';
-import { ACCESS_TOKEN } from '../constants';
-
-import PollList from '../poll/PollList';
-import NewPoll from '../poll/NewPoll';
+import {connect} from "react-redux";
 import Login from '../user/login/Login';
 import Signup from '../user/signup/Signup';
 import Profile from '../user/profile/Profile';
@@ -18,10 +13,8 @@ import AppHeader from '../common/AppHeader';
 import NotFound from '../common/NotFound';
 import LoadingIndicator from '../common/LoadingIndicator';
 import PrivateRoute from '../common/PrivateRoute';
-
+import {loadCurrentUser, Logout} from '../actions/user.actions';
 import { Layout, notification } from 'antd';
-import Top from '../common/Top';
-import TourList from './../tour/TourList';
 import Home from './../home/Home';
 import FooterPage from './../common/Footer';
 import Tourpage from './../tourpage/Tourpage';
@@ -34,87 +27,48 @@ const { Content,Footer } = Layout;
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      currentUser: null,
-      isAuthenticated: false,
-      isLoading: false
-    }
-    this.handleLogout = this.handleLogout.bind(this);
-    this.loadCurrentUser = this.loadCurrentUser.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
-
     notification.config({
       placement: 'topRight',
       top: 70,
       duration: 3,
     });    
+    console.log("App");
+    console.log(props);
+    this.handleLogout=this.handleLogout.bind(this);
+    console.log(this.props);
   }
 
-  loadCurrentUser() {
-    this.setState({
-      isLoading: true
-    });
-    getCurrentUser()
-    .then(response => {
-      this.setState({
-        currentUser: response,
-        isAuthenticated: true,
-        isLoading: false
-      });
-    }).catch(error => {
-      this.setState({
-        isLoading: false
-      });  
-    });
-  }
+componentWillMount() {
+  this.props.loadCurrentUser();
+}
 
-  componentWillMount() {
-    this.loadCurrentUser();
-  }
-
-  handleLogout(redirectTo="/", notificationType="success", description="You're successfully logged out.") {
-    localStorage.removeItem(ACCESS_TOKEN);
-
-    this.setState({
-      currentUser: null,
-      isAuthenticated: false
-    });
-
-    this.props.history.push(redirectTo);
+  handleLogout() {
+    this.props.logout();
+    this.props.history.push("/");
     
-    notification[notificationType]({
-      message: 'Travel App',
-      description: description,
-    });
-  }
-
-  handleLogin() {
     notification.success({
       message: 'Travel App',
-      description: "You're successfully logged in.",
+      description: "Logout success!!",
     });
-    this.loadCurrentUser();
-    this.props.history.push("/");
   }
-
   render() {
-    if(this.state.isLoading) {
+    if(this.props.isLoading) {
       return <LoadingIndicator />
     }
     return (
         <Layout className="app-container">
-          <AppHeader isAuthenticated={this.state.isAuthenticated} 
-            currentUser={this.state.currentUser} 
+          <AppHeader isAuthenticated={this.props.isAuthenticated} 
+            currentUser={this.props.currentUser} 
             onLogout={this.handleLogout} />
           <Content className="app-content">
               <Switch>      
                 <Route exact path="/" 
-                  render={(props) => <Home isAuthenticated={this.state.isAuthenticated} 
-                      currentUser={this.state.currentUser} handleLogout={this.handleLogout} {...props} />}>
+                  render={(props) => <Home isAuthenticated={this.props.isAuthenticated} 
+                      currentUser={this.props.currentUser} handleLogout={this.handleLogout} {...props} />}>
                 </Route>
                 <Route path="/tour" 
-                  render={(props) => <Tourpage isAuthenticated={this.state.isAuthenticated} 
-                      currentUser={this.state.currentUser} handleLogout={this.handleLogout} {...props} />}>
+                  render={(props) => <Tourpage isAuthenticated={this.props.isAuthenticated} 
+                      currentUser={this.props.currentUser} handleLogout={this.handleLogout} {...props} />}>
                 </Route>
                 <Route path="/contact" 
                   render={(props) => <Contact {...props} />}>
@@ -129,12 +83,12 @@ class App extends Component {
                   render={(props) => <Cart {...props} />}>
                 </Route>
                 <Route path="/login" 
-                  render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
+                  render={(props) => <Login {...props} />}></Route>
                 <Route path="/signup" component={Signup}></Route>
                 <Route path="/users/:username" 
-                  render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}>
+                  render={(props) => <Profile isAuthenticated={this.props.isAuthenticated} currentUser={this.props.currentUser} {...props}  />}>
                 </Route>
-                <PrivateRoute authenticated={this.state.isAuthenticated} path="/poll/new" component={NewPoll} handleLogout={this.handleLogout}></PrivateRoute>
+                {/* <PrivateRoute authenticated={this.state.isAuthenticated} path="/poll/new" component={NewPoll} handleLogout={this.handleLogout}></PrivateRoute> */}
                 <Route component={NotFound}></Route>
               </Switch>
           </Content>
@@ -144,6 +98,17 @@ class App extends Component {
         </Layout>
     );
   }
-}
+} 
+const mapStateToProps = (state, ownProps) => ({
+  currentUser: state.auth.currentUser,
+  isAuthenticated: state.auth.isAuthenticated,
+  isLoading: state.auth.isLoading
+})
 
-export default withRouter(App);
+const mapDispatchToProps =dispatch=> {
+  return {
+    loadCurrentUser:()=>dispatch(loadCurrentUser()),
+    logout:()=>dispatch(Logout())
+  }
+}
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(App));
