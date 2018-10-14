@@ -1,11 +1,4 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
-
-import { cleanEntity } from 'app/shared/util/entity-utils';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
-
-import { ICustomer, defaultValue } from 'app/shared/model/customer.model';
-
 export const ACTION_TYPES = {
   FETCH_CUSTOMER_LIST: 'customer/FETCH_CUSTOMER_LIST',
   FETCH_CUSTOMER: 'customer/FETCH_CUSTOMER',
@@ -18,40 +11,38 @@ export const ACTION_TYPES = {
 const initialState = {
   loading: false,
   errorMessage: null,
-  entities: [] as ReadonlyArray<ICustomer>,
-  entity: defaultValue,
+  entities: [],
+  entity: {},
   updating: false,
   updateSuccess: false
 };
 
-export type CustomerState = Readonly<typeof initialState>;
-
 // Reducer
 
-export default (state: CustomerState = initialState, action): CustomerState => {
+export default (state = initialState, action) => {
   switch (action.type) {
-    case REQUEST(ACTION_TYPES.FETCH_CUSTOMER_LIST):
-    case REQUEST(ACTION_TYPES.FETCH_CUSTOMER):
+    case ACTION_TYPES.FETCH_CUSTOMER_LIST:
+    case ACTION_TYPES.FETCH_CUSTOMER:
       return {
         ...state,
         errorMessage: null,
         updateSuccess: false,
         loading: true
       };
-    case REQUEST(ACTION_TYPES.CREATE_CUSTOMER):
-    case REQUEST(ACTION_TYPES.UPDATE_CUSTOMER):
-    case REQUEST(ACTION_TYPES.DELETE_CUSTOMER):
+    case ACTION_TYPES.CREATE_CUSTOMER:
+    case ACTION_TYPES.UPDATE_CUSTOMER:
+    case ACTION_TYPES.DELETE_CUSTOMER:
       return {
         ...state,
         errorMessage: null,
         updateSuccess: false,
         updating: true
       };
-    case FAILURE(ACTION_TYPES.FETCH_CUSTOMER_LIST):
-    case FAILURE(ACTION_TYPES.FETCH_CUSTOMER):
-    case FAILURE(ACTION_TYPES.CREATE_CUSTOMER):
-    case FAILURE(ACTION_TYPES.UPDATE_CUSTOMER):
-    case FAILURE(ACTION_TYPES.DELETE_CUSTOMER):
+    case ACTION_TYPES.FETCH_CUSTOMER_LIST:
+    case ACTION_TYPES.FETCH_CUSTOMER:
+    case ACTION_TYPES.CREATE_CUSTOMER:
+    case ACTION_TYPES.UPDATE_CUSTOMER:
+    case ACTION_TYPES.DELETE_CUSTOMER:
       return {
         ...state,
         loading: false,
@@ -59,27 +50,27 @@ export default (state: CustomerState = initialState, action): CustomerState => {
         updateSuccess: false,
         errorMessage: action.payload
       };
-    case SUCCESS(ACTION_TYPES.FETCH_CUSTOMER_LIST):
+    case ACTION_TYPES.FETCH_CUSTOMER_LIST:
       return {
         ...state,
         loading: false,
         entities: action.payload.data
       };
-    case SUCCESS(ACTION_TYPES.FETCH_CUSTOMER):
+    case ACTION_TYPES.FETCH_CUSTOMER:
       return {
         ...state,
         loading: false,
         entity: action.payload.data
       };
-    case SUCCESS(ACTION_TYPES.CREATE_CUSTOMER):
-    case SUCCESS(ACTION_TYPES.UPDATE_CUSTOMER):
+    case ACTION_TYPES.CREATE_CUSTOMER:
+    case ACTION_TYPES.UPDATE_CUSTOMER:
       return {
         ...state,
         updating: false,
         updateSuccess: true,
         entity: action.payload.data
       };
-    case SUCCESS(ACTION_TYPES.DELETE_CUSTOMER):
+    case ACTION_TYPES.DELETE_CUSTOMER:
       return {
         ...state,
         updating: false,
@@ -99,38 +90,38 @@ const apiUrl = 'api/customers';
 
 // Actions
 
-export const getEntities: ICrudGetAllAction<ICustomer> = (page, size, sort) => ({
+export const getEntities = (page, size,sort) => ({
   type: ACTION_TYPES.FETCH_CUSTOMER_LIST,
-  payload: axios.get<ICustomer>(`${apiUrl}?cacheBuster=${new Date().getTime()}`)
+  payload: axios.get(`${apiUrl}?cacheBuster=${new Date().getTime()}`)
 });
 
-export const getEntity: ICrudGetAction<ICustomer> = id => {
+export const getEntity = id => {
   const requestUrl = `${apiUrl}/${id}`;
   return {
     type: ACTION_TYPES.FETCH_CUSTOMER,
-    payload: axios.get<ICustomer>(requestUrl)
+    payload: axios.get(requestUrl)
   };
 };
 
-export const createEntity: ICrudPutAction<ICustomer> = entity => async dispatch => {
+export const createEntity = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_CUSTOMER,
-    payload: axios.post(apiUrl, cleanEntity(entity))
+    payload: axios.post(apiUrl, entity)
   });
   dispatch(getEntities());
   return result;
 };
 
-export const updateEntity: ICrudPutAction<ICustomer> = entity => async dispatch => {
+export const updateEntity = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_CUSTOMER,
-    payload: axios.put(apiUrl, cleanEntity(entity))
+    payload: axios.put(apiUrl, entity)
   });
   dispatch(getEntities());
   return result;
 };
 
-export const deleteEntity: ICrudDeleteAction<ICustomer> = id => async dispatch => {
+export const deleteEntity = id => async dispatch => {
   const requestUrl = `${apiUrl}/${id}`;
   const result = await dispatch({
     type: ACTION_TYPES.DELETE_CUSTOMER,
