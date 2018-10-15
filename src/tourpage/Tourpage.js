@@ -3,7 +3,6 @@ import TourHot from '../common/TourHot';
 import FilterTour from './FilterTour';
 import SideBar from './SideBar';
 import Tour from '../tour/Tour';
-import MainTitle from '../common/MainTitle';
 
 class Tourpage extends Component {
     render() {

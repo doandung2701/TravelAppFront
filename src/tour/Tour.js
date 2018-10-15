@@ -6,8 +6,8 @@ class Tour extends Component {
             <div className="item">
                 <div className="box_grid">
                     <figure>
-                        <a href="#0" className="wish_bt" />
-                        <a href="tour-detail.html"><img src="img/tour_1.jpg" className="img-fluid" alt width={800} height={533} /><div className="read_more"><span>Read more</span></div></a>
+                        <a href="google.com" className="wish_bt" aria-hidden={true} />
+                        <a href="tour-detail.html"><img src="img/tour_1.jpg" className="img-fluid" alt="Detail" width={800} height={533} /><div className="read_more"><span>Read more</span></div></a>
                         <small>Historic</small>
                     </figure>
                     <div className="wrapper">

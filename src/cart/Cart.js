@@ -7,7 +7,6 @@ import Three from './Three';
 import {
 
     Route,
-    withRouter,
     Switch
 } from 'react-router-dom';
 class Cart extends Component {

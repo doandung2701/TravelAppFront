@@ -7,7 +7,7 @@ const initialState={
   notfound:false,
   server_error:false,
   userProfle:null,
-  isAdmin:true
+  isAdmin:false
 };
   export const AuthReducer= (state = initialState, action)=>{
     switch (action.type) {

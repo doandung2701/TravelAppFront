@@ -7,7 +7,7 @@ class Hotel extends Component {
   <a href="hotel-detail.html" className="grid_item">
     <figure>
       <div className="score"><strong>8.9</strong></div>
-      <img src="img/hotel_1.jpg" className="img-fluid" alt />
+      <img src="img/hotel_1.jpg" className="img-fluid" alt="" />
       <div className="info">
         <div className="cat_star"><i className="icon_star" /><i className="icon_star" /><i className="icon_star" /><i className="icon_star" /></div>
         <h3>Mariott Hotel</h3>

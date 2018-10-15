@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { getEntity } from './customer.reducer';
 
 
@@ -8,7 +7,7 @@ export class CustomerDetail extends React.Component {
   
 
   render() {
-    const { customerEntity } = this.props;
+    // const { customerEntity } = this.props;
     return (
       <h1>Detal</h1>
     )

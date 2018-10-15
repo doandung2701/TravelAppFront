@@ -4,7 +4,6 @@ import {
   Route,
   withRouter,
   Switch,
-  BrowserRouter as Router,
 } from 'react-router-dom';
 import { connect } from "react-redux";
 import Login from '../user/login/Login';
@@ -13,7 +12,6 @@ import Profile from '../user/profile/Profile';
 import AppHeader from '../common/AppHeader';
 import NotFound from '../common/NotFound';
 import LoadingIndicator from '../common/LoadingIndicator';
-import PrivateRoute from '../common/PrivateRoute';
 import { loadCurrentUser, Logout } from '../actions/user.actions';
 import { Layout, notification } from 'antd';
 import Home from './../home/Home';
@@ -23,10 +21,6 @@ import Contact from '../contact/Contact';
 import Aboutpage from './../about/Aboutpage';
 import TourDetail from './../tourdetail/TourDetail';
 import Cart from '../cart/Cart';
-import AdminHeader from '../admin/adminheader';
-import Dashboard from '../admin/dasboard';
-import Scroll from '../common/Scroll';
-import { Customer } from '../admin/customer/customer';
 import AdminPage from '../admin/Admin';
 
 const { Content, Footer } = Layout;

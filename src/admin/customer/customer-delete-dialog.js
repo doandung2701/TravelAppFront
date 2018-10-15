@@ -18,7 +18,7 @@ export class CustomerDeleteDialog extends React.Component {
   };
 
   render() {
-    const { customerEntity } = this.props;
+    // const { customerEntity } = this.props;
     return (
       <h1>Delete</h1>
     )

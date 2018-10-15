@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const Result =({img,header,content})=>
 <div className="col-lg-4 col-md-6">

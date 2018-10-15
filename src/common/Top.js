@@ -17,7 +17,7 @@ class Top extends Component {
     }
     
     render() {
-        const {showCatalogue}=this.state;
+        // const {showCatalogue}=this.state;
         return (
             <section className="header-video">
             <div id="hero_video">
@@ -48,7 +48,7 @@ class Top extends Component {
                 </div>
               </div>
             </div>
-            <img src="/img/video_fix.png" alt className="header-video--media" data-video-src="/video/intro" data-teaser-source="/video/intro" data-provider data-video-width={1920} data-video-height={960} style={{display: 'none'}} />
+            <img src="/img/video_fix.png" alt="" className="header-video--media" data-video-src="/video/intro" data-teaser-source="/video/intro" data-provider data-video-width={1920} data-video-height={960} style={{display: 'none'}} />
             <video autoPlay="true" loop="loop" muted id="teaser-video" className="teaser-video"><source src="/video/intro.mp4" type="video/mp4" /><source src="/video/intro.ogv" type="video/ogg" /></video></section>          
         );
     }

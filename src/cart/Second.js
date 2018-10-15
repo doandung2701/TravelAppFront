@@ -6,7 +6,7 @@ class Second extends Component {
         return (
             <div className="box_cart">
                 <div className="message">
-                    <p>Exisitng Customer? <a href="#0">Click here to login</a></p>
+                    <p>Exisitng Customer? <a href="120">Click here to login</a></p>
                 </div>
                 <div className="form_title">
                     <h3><strong>1</strong>Your Details</h3>
@@ -115,7 +115,7 @@ class Second extends Component {
                         Lorem ipsum dolor sit amet, vim id accusata sensibus, id ridens quaeque qui. Ne qui vocent ornatus molestie, reque fierent dissentiunt mel ea.
     </p>
                     <p>
-                        <a href="#0"><img src="img/paypal_bt.png" alt="Image" /></a>
+                        <a href="this is a link"><img src="img/paypal_bt.png" alt="payload" /></a>
                     </p>
                 </div>
                 <hr />

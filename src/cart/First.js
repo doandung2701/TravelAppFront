@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import CartListItem from './CartListItem';
-import CartCheckout from './CartCheckout';
 
 class First extends Component {
     render() {

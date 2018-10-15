@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const MainTitle=({title,content})=>
 <div className="main_title_2">

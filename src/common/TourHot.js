@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 
-class TourHot extends Component {
-    constructor(props) {
-        super(props);
-        
-    }
-    
+class TourHot extends Component {  
     render() {
         return (
             <section className="hero_in tours start_bg_zoom">

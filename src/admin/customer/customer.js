@@ -1,6 +1,4 @@
-import { connect } from 'react-redux';
-import React, { Component } from 'react'
-import { getEntities } from './customer.reducer';
+import React from 'react'
 export class Customer extends React.Component {
   render() {
     return (
