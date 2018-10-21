@@ -30,3 +30,7 @@ export const EMAIL_MAX_LENGTH = 40;
 export const PASSWORD_MIN_LENGTH = 6;
 export const PASSWORD_MAX_LENGTH = 20;
 export const GET_TOKEN_ERROR='GET_TOKEN_ERROR';
+//provider
+export const LOAD_PROVIDER='LOAD PROVIDER';
+//Category
+export const LOAD_CATEGORY='LOAD_CATEGORY';

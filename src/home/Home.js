@@ -4,7 +4,7 @@ import MainTitle from '../common/MainTitle';
 import Top from './../common/Top';
 import Submenu from './../common/Submenu';
 import HotelList from '../hotel/HotelList';
-
+import { Link } from 'react-router-dom';
 class Home extends Component {
     render() {
         return (
@@ -14,7 +14,7 @@ class Home extends Component {
                 <MainTitle title="Our Popular Tours" content="Cum doctus civibus efficiantur in imperdiet deterruisset."/>
                 <TourList {...this.props}/>
                 <div className="container">
-				<p className="btn_home_align"><a href="tours-grid-isotope.html" className="btn_1 rounded">View all Tours</a></p>
+				<p className="btn_home_align"><Link to="/tour" className="btn_1 rounded">View all Tours</Link></p>
                 </div>
                 <hr className="large"/>
                 <div className="container-fluid margin_30_95 pl-lg-5 pr-lg-5">

@@ -32,12 +32,12 @@ class SideBar extends Component {
                                     </label>
                                 </li>
                                 <li>
-                                    <label className>
+                                    <label>
                                         <div className="icheckbox_square-grey" style={{ position: 'relative' }}><input type="checkbox" className="icheck" style={{ position: 'absolute', opacity: 0 }} /><ins className="iCheck-helper" style={{ position: 'absolute', top: '0%', left: '0%', display: 'block', width: '100%', height: '100%', margin: 0, padding: 0, background: 'rgb(255, 255, 255)', border: 0, opacity: 0 }} /></div>Museums <small>(45)</small>
                                     </label>
                                 </li>
                                 <li>
-                                    <label className>
+                                    <label>
                                         <div className="icheckbox_square-grey" style={{ position: 'relative' }}><input type="checkbox" className="icheck" style={{ position: 'absolute', opacity: 0 }} /><ins className="iCheck-helper" style={{ position: 'absolute', top: '0%', left: '0%', display: 'block', width: '100%', height: '100%', margin: 0, padding: 0, background: 'rgb(255, 255, 255)', border: 0, opacity: 0 }} /></div>Churches <small>(30)</small>
                                     </label>
                                 </li>

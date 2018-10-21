@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './Top.css';
-import SelectCategory from './SelectCategory';
-
+import Search from  './Search';
 class Top extends Component {
     constructor(props) {
         super(props);
@@ -25,26 +24,7 @@ class Top extends Component {
                 <div className="container">
                   <h3>Book unique experiences</h3>
                   <p>Expolore top rated tours, hotels and restaurants around the world</p>
-                  <form>
-                    <div className="row no-gutters custom-search-input-2">
-                      <div className="col-lg-4">
-                        <div className="form-group">
-                          <input className="form-control" type="text" placeholder="What are you looking for..." />
-                          <i className="icon_search" />
-                        </div>
-                      </div>
-                      <div className="col-lg-3">
-                        <div className="form-group">
-                          <input className="form-control" type="text" placeholder="Where" />
-                          <i className="icon_pin_alt" />
-                        </div>
-                      </div>
-                      <SelectCategory/>
-                      <div className="col-lg-2">
-                        <input type="submit" className="btn_search" defaultValue="Search" />
-                      </div>
-                    </div>
-                  </form>
+                  <Search/>
                 </div>
               </div>
             </div>
