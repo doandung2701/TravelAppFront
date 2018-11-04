@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Scroll from './Scroll';
-
+import {
+    Link
+    
+  } from 'react-router-dom';
 class FooterPage extends Component {
     render() {
         return (
@@ -14,22 +17,21 @@ class FooterPage extends Component {
                             <div className="follow_us">
                                 <ul>
                                     <li>Follow us</li>
-                                    <li><a href="#0"><i className="ti-facebook" /></a></li>
-                                    <li><a href="#0"><i className="ti-twitter-alt" /></a></li>
-                                    <li><a href="#0"><i className="ti-google" /></a></li>
-                                    <li><a href="#0"><i className="ti-pinterest" /></a></li>
-                                    <li><a href="#0"><i className="ti-instagram" /></a></li>
+                                    <li><a href="https://facebook.com"><i className="ti-facebook" /></a></li>
+                                    <li><a href="https://twitter.com"><i className="ti-twitter-alt" /></a></li>
+                                    <li><a href="https://plus.google.com/discover"><i className="ti-google" /></a></li>
+                                    <li><a href="https://www.pinterest.com/"><i className="ti-pinterest" /></a></li>
+                                    <li><a href="https://www.instagram.com/"><i className="ti-instagram" /></a></li>
                                 </ul>
                             </div>
                         </div>
                         <div className="col-lg-3 col-md-6 ml-lg-auto">
                             <h5>Useful links</h5>
                             <ul className="links">
-                                <li><a href="about.html">About</a></li>
-                                <li><a href="login.html">Login</a></li>
-                                <li><a href="register.html">Register</a></li>
-                                <li><a href="blog.html">News &amp; Events</a></li>
-                                <li><a href="contacts.html">Contacts</a></li>
+                                <li><Link to="/about">About</Link></li>
+                                <li><Link to="/login">Login</Link></li>
+                                <li><Link to="/signup">Register</Link></li>
+                                <li><Link to="/contact">Contacts</Link></li>
                             </ul>
                         </div>
                         <div className="col-lg-3 col-md-6">

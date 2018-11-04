@@ -23,7 +23,7 @@ class Top extends Component {
               <div className="wrapper">
                 <div className="container">
                   <h3>Book unique experiences</h3>
-                  <p>Expolore top rated tours, hotels and restaurants around the world</p>
+                  <p>Expolore top rated tours, hotels around the world</p>
                   <Search/>
                 </div>
               </div>

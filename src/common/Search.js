@@ -3,7 +3,6 @@ import { Select } from 'antd';
 import './SelectCategory.css';
 import { loadProvider } from '../actions/provideractions';
 import { connect } from 'react-redux';
-import { Input, Icon } from 'antd';
 const Option = Select.Option;
 const mapStateToProps = (state, ownProps) => ({
     provider: state.provider.provider
@@ -22,7 +21,6 @@ class Search extends Component {
         this.setState({
             txtsearch: e.target.value
         });
-        console.log(this.state);
       };
     componentDidMount() {
         this.props.loadProvider();
@@ -31,18 +29,15 @@ class Search extends Component {
             this.setState({
                 provider:value
             })
-            console.log(this.state);
             
     }
     onChangeCategory=value=>{
         this.setState({
         category:value
         })
-        console.log(this.state);
     }
     handleSubmit=e=>{
         e.preventDefault();
-        console.log("Hehe");
     }
     render() {
         return (
@@ -58,7 +53,7 @@ class Search extends Component {
                         <Select  style={{ border: 'none !important' }} defaultValue="An Giang" onChange={this.onChangeProvider}>
                             {this.props.provider.map(provider => {
                                 return (
-                                    <Option value={provider.name} key={provider.key}>{provider.name}</Option>
+                                    <Option value={provider.name} key={provider.id}>{provider.name}</Option>
                                 );
                             })}
                         </Select>

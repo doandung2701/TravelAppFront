@@ -34,3 +34,6 @@ export const GET_TOKEN_ERROR='GET_TOKEN_ERROR';
 export const LOAD_PROVIDER='LOAD PROVIDER';
 //Category
 export const LOAD_CATEGORY='LOAD_CATEGORY';
+//tour
+export const LOAD_TOUR='LOAD_TOUR';
+export const LOAD_TOUR_BY_ID='LOAD_TOUR_BY_ID';

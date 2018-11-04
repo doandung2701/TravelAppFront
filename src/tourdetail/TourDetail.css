@@ -1,0 +1,9 @@
+.thumbnail:hover {
+    transform: scale(7);
+    margin: 0 auto;
+    z-index: 100;
+    position: absolute;
+};
+.thumbnail{
+    transition: transform .2s;
+}

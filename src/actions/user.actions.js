@@ -16,8 +16,6 @@ export const request = (options) => {
     .then(response => 
         response.json().then(json => {
             if(!response.ok) {
-                console.log("BEn trong request");
-                console.log(json);
                 return Promise.reject(json);
             }
            return json;
@@ -59,8 +57,6 @@ export function login(loginRequest) {
             method: 'POST',
             body: JSON.stringify(loginRequest)
         }).then(response=>{
-            console.log("Thnah cong");
-            console.log(response);
             localStorage.setItem(ACCESS_TOKEN, response.accessToken);
             getCurrentUser().then(response=>{
                 dispatch({type:LOG_IN_SUCCESS,currentUser:response});

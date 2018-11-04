@@ -21,7 +21,6 @@ import Contact from '../contact/Contact';
 import Aboutpage from './../about/Aboutpage';
 import TourDetail from './../tourdetail/TourDetail';
 import Cart from '../cart/Cart';
-import AdminPage from '../admin/Admin';
 
 const { Content, Footer } = Layout;
 
@@ -33,10 +32,7 @@ class App extends Component {
       top: 70,
       duration: 3,
     });
-    console.log("App");
-    console.log(props);
     this.handleLogout = this.handleLogout.bind(this);
-    console.log(this.props);
   }
 
   componentWillMount() {
@@ -78,7 +74,7 @@ class App extends Component {
               <Route path="/about"
                 render={(props) => <Aboutpage {...props} />}>
               </Route>
-              <Route path="/tourDetail"
+              <Route path="/tourDetail/:tourId"
                 render={(props) => <TourDetail {...props} />}>
               </Route>
               <Route path="/cart"
@@ -88,10 +84,8 @@ class App extends Component {
               <Route path="/users/:username"
                 render={(props) => <Profile isAuthenticated={this.props.isAuthenticated} currentUser={this.props.currentUser} {...props} />}>
               </Route>
-              {/* <PrivateRoute authed={this.props.isAuthenticated} path="/admin" component={Admin} handleLogout={this.handleLogout}></PrivateRoute>  */}
               <Route path="/login"
                 render={(props) => <Login {...props} />}></Route>
-              <Route path="/admin" render={(props)=><AdminPage {...props}></AdminPage>}></Route>
               <Route component={NotFound}></Route>
             </Switch>
           </Content>
