@@ -3,17 +3,25 @@ import {
     Link
   } from 'react-router-dom';
 class Tour extends Component {
-    handleRateTour=()=>{
-        var some=0;
-        this.props.tourDetail.rateTours.map(rate=>{
-                some=some+rate.id;
-        });
-        some=some/(this.props.tourDetail.rateTours.length);
-        return some.toFixed(2);
-
+    constructor(props){
+        super(props);
+        this.state={
+            count:this.props.tourDetail.rates.length,
+            type:""
+        }
     }
-
-    
+    handleRateTour=()=>{
+        var some = 0;
+        var count=0;
+        if (this.props.tourDetail.rates !== undefined) {
+            this.props.tourDetail.rates.map(rate => {
+                count++;
+                some=some+rate.rateType.id;
+            });
+            some = some / count;
+            return some.toFixed(2);
+        }
+    }
     render() {
         return (
             <div className="item">
@@ -30,7 +38,7 @@ class Tour extends Component {
                     </div>
                     <ul>
                         <li>Free space: {this.props.tourDetail.freeSpace}</li>
-                        <li><div className="score"><span>Superb<em>350 Reviews</em></span><strong>{this.handleRateTour()}</strong></div></li>
+                        <li><div className="score"><span><em>{this.state.count} Reviews</em></span><strong>{this.handleRateTour()}</strong></div></li>
                     </ul>
                 </div>
             </div>

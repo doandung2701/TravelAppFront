@@ -11,14 +11,14 @@ class Home extends Component {
             <div>
                 <Top/>
                 <div className="container-fluid margin_80_0">
-                <MainTitle title="Our Popular Tours" content="Cum doctus civibus efficiantur in imperdiet deterruisset."/>
+                <MainTitle title="Our Popular Tours" content="Tour hot"/>
                 <TourList {...this.props}/>
                 <div className="container">
 				<p className="btn_home_align"><Link to="/tour" className="btn_1 rounded">View all Tours</Link></p>
                 </div>
                 <hr className="large"/>
                 <div className="container-fluid margin_30_95 pl-lg-5 pr-lg-5">
-                <Submenu title="Popular Hotels and Accommodations" content="Cum doctus civibus efficiantur in imperdiet deterruisset."/>
+                <Submenu title="Popular Tours" content="Tour hot"/>
                 <HotelList/>
                 </div>
 			</div>

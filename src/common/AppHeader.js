@@ -33,11 +33,6 @@ class AppHeader extends Component {
             Tour
              </Link>
         </Menu.Item>,
-        <Menu.Item key="/hotel">
-          <Link to="/hotel">
-            Hotels
-            </Link>
-        </Menu.Item>,
         <Menu.Item key="/about">
           <Link to="/about">
             About
@@ -65,11 +60,6 @@ class AppHeader extends Component {
           <Link to="/tour">
             Tour
             </Link>
-        </Menu.Item>,
-        <Menu.Item key="/hotel">
-          <Link to="/hotel">
-            Hotels
-           </Link>
         </Menu.Item>,
         <Menu.Item key="/about">
           <Link to="/about">

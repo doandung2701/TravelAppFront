@@ -1,10 +1,10 @@
 import axios from  'axios';
-import { API_BASE_URL, LOAD_PROVIDER, FINISH_PROCESSING } from "../constants";
-export const loadProvider = () => {
+import { API_BASE_URL, FINISH_PROCESSING, LOAD_CATEGORY } from "../constants";
+export const loadCategory = () => {
     return (dispatch) => {
-      return axios.get(`${API_BASE_URL}/categorys`)
+      return axios.get(`${API_BASE_URL}/category`)
         .then(response => {
-          dispatch(fetchProviders(response.data));
+          dispatch(fetchCategorySuccess(response.data));
         })
         .catch(error => {
             dispatch ({ type:FINISH_PROCESSING });
@@ -12,9 +12,9 @@ export const loadProvider = () => {
         });
     };
   };
-  export const fetchProviders = (providers) => {
+  export const fetchCategorySuccess = (categories) => {
     return {
-      type: LOAD_PROVIDER,
-      providers
+      type: LOAD_CATEGORY,
+      categories
     }
   };

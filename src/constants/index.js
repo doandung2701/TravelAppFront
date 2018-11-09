@@ -9,6 +9,7 @@ export const LOG_IN_FAILURE=  'LOG_IN_FAILURE';
 export const LOG_OUT = 'LOG_OUT';
 export const LOAD_USER_PROFILE='LOAD_USER_PROFLE';
 export const LOAD_CURRENT_USER='LOAD_CURRENT_USER';
+export const UPDATE_PROFILE='UPDATE PROFILE';
 export const API_BASE_URL = 'http://localhost:5000/api';
 //export const API_BASE_URL = '/api';
 export const ACCESS_TOKEN = 'accessToken';
@@ -37,3 +38,7 @@ export const LOAD_CATEGORY='LOAD_CATEGORY';
 //tour
 export const LOAD_TOUR='LOAD_TOUR';
 export const LOAD_TOUR_BY_ID='LOAD_TOUR_BY_ID';
+//rate
+export const LOAD_RATE='LOAD_RATE';
+//comment
+export const CREATE_COMMENT='CREATE_COMMENT';

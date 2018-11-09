@@ -7,3 +7,6 @@
 .thumbnail{
     transition: transform .2s;
 }
+.custom-select-form div{
+        width: 100%;
+}

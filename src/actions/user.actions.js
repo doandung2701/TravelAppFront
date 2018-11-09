@@ -1,4 +1,5 @@
-import {NOT_FOUND,SERVER_ERROR, POLL_LIST_SIZE,API_BASE_URL, ACCESS_TOKEN, START_PROCESSING, LOG_IN_SUCCESS, FINISH_PROCESSING, LOG_OUT, CLEAR_ERRORS, LOAD_USER_PROFILE } from '../constants';
+import {NOT_FOUND,SERVER_ERROR,API_BASE_URL, ACCESS_TOKEN, START_PROCESSING, LOG_IN_SUCCESS, FINISH_PROCESSING, LOG_OUT, CLEAR_ERRORS, LOAD_USER_PROFILE, UPDATE_PROFILE } from '../constants';
+import Login from '../user/login/Login';
 
 export const request = (options) => {
     const headers = new Headers({
@@ -22,33 +23,6 @@ export const request = (options) => {
         })
     );
 };
-
-export function getAllPolls(page, size) {
-    page = page || 0;
-    size = size || POLL_LIST_SIZE;
-
-    return request({
-        url: API_BASE_URL + "/polls?page=" + page + "&size=" + size,
-        method: 'GET'
-    });
-}
-
-export function createPoll(pollData) {
-    return request({
-        url: API_BASE_URL + "/polls",
-        method: 'POST',
-        body: JSON.stringify(pollData)         
-    });
-}
-
-export function castVote(voteData) {
-    return request({
-        url: API_BASE_URL + "/polls/" + voteData.pollId + "/votes",
-        method: 'POST',
-        body: JSON.stringify(voteData)
-    });
-}
-
 export function login(loginRequest) {
     return dispatch=>{
         dispatch({type:START_PROCESSING});
@@ -133,8 +107,6 @@ export function getUserProfile(username) {
             method: 'GET'
         }).then(response=>{
             dispatch({type:LOAD_USER_PROFILE,userProfle:response});
-            dispatch({type:CLEAR_ERRORS})
-            dispatch({ type:FINISH_PROCESSING });
         }).catch(error=>{
             if(error.status === 404) {
                 dispatch({type:NOT_FOUND});
@@ -148,23 +120,21 @@ export function getUserProfile(username) {
     }
       
 }
+export function updateProfile(signupRequest) {
+    return dispatch=>{
+        dispatch({type:START_PROCESSING});
+        request({
+            url: API_BASE_URL + "/user",
+            method: 'PUT',
+            body: JSON.stringify(signupRequest)
+        }).then(response=>{
+            dispatch({type:UPDATE_PROFILE,user:response.data});
+            Logout();
+            Login();
+            dispatch({type:FINISH_PROCESSING})
+        }).catch(err=>{
+            dispatch({type:FINISH_PROCESSING});
+        })
+    }
 
-export function getUserCreatedPolls(username, page, size) {
-    page = page || 0;
-    size = size || POLL_LIST_SIZE;
-
-    return request({
-        url: API_BASE_URL + "/users/" + username + "/polls?page=" + page + "&size=" + size,
-        method: 'GET'
-    });
-}
-
-export function getUserVotedPolls(username, page, size) {
-    page = page || 0;
-    size = size || POLL_LIST_SIZE;
-
-    return request({
-        url: API_BASE_URL + "/users/" + username + "/votes?page=" + page + "&size=" + size,
-        method: 'GET'
-    });
 }

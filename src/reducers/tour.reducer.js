@@ -1,8 +1,10 @@
-import { START_PROCESSING,LOAD_TOUR,FINISH_PROCESSING,CLEAR_ERRORS,LOAD_TOUR_BY_ID } from "../constants";
+import { START_PROCESSING,LOAD_TOUR,FINISH_PROCESSING,CLEAR_ERRORS,LOAD_TOUR_BY_ID, CREATE_COMMENT } from "../constants";
 const initialstate={
-    isLoading:true,
+    isLoading:false,
     tours:[],
-    tourDetail:{}
+    tourDetail:{},
+    commnentOfTour:[],
+    rateTour:[]
 };
 export const tourReducer= (state = initialstate, action)=>{
     switch (action.type) {
@@ -14,9 +16,11 @@ export const tourReducer= (state = initialstate, action)=>{
       return { ...state, isLoading: false };
      case LOAD_TOUR_BY_ID:
     
-     return {...state,tourDetail:action.tourDetail,isLoading:false} 
+     return {...state,tourDetail:action.tourDetail,commnentOfTour:action.tourDetail.comments,rateTour:action.tourDetail.rates,isLoading:false} 
+     case CREATE_COMMENT:
+     return {...state,commnentOfTour:[...state.commnentOfTour, action.data[0]],rateTour:[...state.rateTour,action.data[1]],isLoading:false};
       case CLEAR_ERRORS:
-      return { ...state, errors: {} };
+      return { ...state, errors: {},isLoading:false };
     default:
       return state;
     }

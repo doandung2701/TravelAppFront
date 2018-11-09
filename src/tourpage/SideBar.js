@@ -1,85 +1,50 @@
 import React, { Component } from 'react';
-import InputRange from './InputRange';
+import { loadCategory, loadTourByCategory } from '../actions';
+import { connect } from 'react-redux';
+import { Radio } from 'antd';
 
+const RadioGroup = Radio.Group;
 class SideBar extends Component {
     constructor(props) {
         super(props);
-        this.state={
-            showFilter:true
+        this.state = {
+            showFilter: true,
+            value: '1'
         }
-        this.handleClick=this.handleClick.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
-    handleClick=()=>{
+    handleClick = () => {
         this.setState(
             {
-                showFilter:!this.state.showFilter
+                showFilter: !this.state.showFilter
             }
         );
+    }
+    componentDidMount = () => {
+        this.props.loadCategory();
+    }
+    onChange=(e)=>{
+        this.setState({
+            value: e.target.value,
+          });
+    this.props.loadTourByCategory(e.target.value);
     }
     render() {
         return (
             <aside className="col-lg-3" id="sidebar" style={{ position: 'relative', overflow: 'visible', boxSizing: 'border-box', minHeight: 1 }}>
-                {/*/filters col*/}
                 <div className="theiaStickySidebar" style={{ paddingTop: 0, paddingBottom: 1, position: 'static', transform: 'none', top: 0, left: '204.6px' }}><div id="filters_col">
                     <a onClick={this.handleClick} data-toggle="collapse" aria-expanded="false" aria-controls="collapseFilters" id="filters_col_bt" className="collapsed">Filters </a>
-                    {this.state.showFilter&&<div id="collapseFilters">
+                    {this.state.showFilter && <div id="collapseFilters">
                         <div className="filter_type">
                             <h6>Category</h6>
                             <ul>
-                                <li>
-                                    <label>
-                                        <div className="icheckbox_square-grey checked" style={{ position: 'relative' }}><input type="checkbox" className="icheck" defaultChecked style={{ position: 'absolute', opacity: 0 }} /><ins className="iCheck-helper" style={{ position: 'absolute', top: '0%', left: '0%', display: 'block', width: '100%', height: '100%', margin: 0, padding: 0, background: 'rgb(255, 255, 255)', border: 0, opacity: 0 }} /></div>All <small>(945)</small>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <div className="icheckbox_square-grey" style={{ position: 'relative' }}><input type="checkbox" className="icheck" style={{ position: 'absolute', opacity: 0 }} /><ins className="iCheck-helper" style={{ position: 'absolute', top: '0%', left: '0%', display: 'block', width: '100%', height: '100%', margin: 0, padding: 0, background: 'rgb(255, 255, 255)', border: 0, opacity: 0 }} /></div>Museums <small>(45)</small>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <div className="icheckbox_square-grey" style={{ position: 'relative' }}><input type="checkbox" className="icheck" style={{ position: 'absolute', opacity: 0 }} /><ins className="iCheck-helper" style={{ position: 'absolute', top: '0%', left: '0%', display: 'block', width: '100%', height: '100%', margin: 0, padding: 0, background: 'rgb(255, 255, 255)', border: 0, opacity: 0 }} /></div>Churches <small>(30)</small>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <div className="icheckbox_square-grey" style={{ position: 'relative' }}><input type="checkbox" className="icheck" style={{ position: 'absolute', opacity: 0 }} /><ins className="iCheck-helper" style={{ position: 'absolute', top: '0%', left: '0%', display: 'block', width: '100%', height: '100%', margin: 0, padding: 0, background: 'rgb(255, 255, 255)', border: 0, opacity: 0 }} /></div>Historic <small>(25)</small>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <div className="icheckbox_square-grey" style={{ position: 'relative' }}><input type="checkbox" className="icheck" style={{ position: 'absolute', opacity: 0 }} /><ins className="iCheck-helper" style={{ position: 'absolute', top: '0%', left: '0%', display: 'block', width: '100%', height: '100%', margin: 0, padding: 0, background: 'rgb(255, 255, 255)', border: 0, opacity: 0 }} /></div>Walking <small>(56)</small>
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="filter_type">
-                            <h6>Duration</h6>
-                            <InputRange/>
-                        </div>
-                        <div className="filter_type">
-                            <h6>Rating</h6>
-                            <ul>
-                                <li>
-                                    <label>
-                                        <div className="icheckbox_square-grey" style={{ position: 'relative' }}><input type="checkbox" className="icheck" style={{ position: 'absolute', opacity: 0 }} /><ins className="iCheck-helper" style={{ position: 'absolute', top: '0%', left: '0%', display: 'block', width: '100%', height: '100%', margin: 0, padding: 0, background: 'rgb(255, 255, 255)', border: 0, opacity: 0 }} /></div>Superb 9+ <small>(25)</small>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <div className="icheckbox_square-grey" style={{ position: 'relative' }}><input type="checkbox" className="icheck" style={{ position: 'absolute', opacity: 0 }} /><ins className="iCheck-helper" style={{ position: 'absolute', top: '0%', left: '0%', display: 'block', width: '100%', height: '100%', margin: 0, padding: 0, background: 'rgb(255, 255, 255)', border: 0, opacity: 0 }} /></div>Very Good 8+ <small>(26)</small>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <div className="icheckbox_square-grey" style={{ position: 'relative' }}><input type="checkbox" className="icheck" style={{ position: 'absolute', opacity: 0 }} /><ins className="iCheck-helper" style={{ position: 'absolute', top: '0%', left: '0%', display: 'block', width: '100%', height: '100%', margin: 0, padding: 0, background: 'rgb(255, 255, 255)', border: 0, opacity: 0 }} /></div>Good 7+ <small>(25)</small>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <div className="icheckbox_square-grey" style={{ position: 'relative' }}><input type="checkbox" className="icheck" style={{ position: 'absolute', opacity: 0 }} /><ins className="iCheck-helper" style={{ position: 'absolute', top: '0%', left: '0%', display: 'block', width: '100%', height: '100%', margin: 0, padding: 0, background: 'rgb(255, 255, 255)', border: 0, opacity: 0 }} /></div>Pleasant 6+ <small>(12)</small>
-                                    </label>
-                                </li>
+                                <RadioGroup onChange={this.onChange} value={this.state.value}>
+                                    {this.props.categories.map(value => {
+                                        return (<li><Radio value={value.id}>{value.name}</Radio>
+                                            </li>)
+                                    }
+                                    )}
+                                </RadioGroup>
                             </ul>
                         </div>
                     </div>}
@@ -89,5 +54,14 @@ class SideBar extends Component {
         );
     }
 }
+const mapStateToProps = (state, ownProps) => ({
+    categories: state.category.categories
+})
+const mapDispatchToProps = dispatch => {
+    return {
 
-export default SideBar;
+        loadCategory: () => dispatch(loadCategory())
+       
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar);

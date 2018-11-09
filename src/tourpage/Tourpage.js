@@ -1,47 +1,58 @@
 import React, { Component } from 'react';
 import TourHot from '../common/TourHot';
-import FilterTour from './FilterTour';
 import SideBar from './SideBar';
 import Tour from '../tour/Tour';
-
+import { connect } from 'react-redux';
+import { loadTour, loadTourByCategory } from '../actions/tour.actions';
+import LoadingIndicator from '../common/LoadingIndicator';
 class Tourpage extends Component {
+    componentDidMount = () => {
+        this.props.loadTour();
+    }
+    renderDataHasLoading=()=>{
+        if(this.props.tour.length==0){
+            return <LoadingIndicator/>
+        }else{
+            return   this.props.tour.map(tour => {
+                return (
+                    <div key={tour.id} className="col-md-6 isotope-item popular">
+                        <Tour tourDetail={tour} ></Tour>
+                    </div>)
+            })
+           
+        }
+    }
     render() {
+        
         return (
             <div>
-                <TourHot content="Tour hot" />
-                <FilterTour />
+                <TourHot content="Hot tour" />
                 <div className="container margin_60_35">
                     <div className="row">
-                        <SideBar />
+                        <SideBar loadTourByCategory={(category)=>this.props.loadTourByCategory(category)}/>
                         <div className="col-lg-9">
-                            <div className="isotope-wrapper" style={{ position: 'relative', height: '1447.8px' }}>
+                            <div className="isotope-wrapper">
                                 <div className="row">
-                                    <div className="col-md-6 isotope-item popular">
-                                        <Tour />
-                                    </div>
-                                    <div className="col-md-6 isotope-item popular">
-                                        <Tour />
-                                    </div>
-                                    <div className="col-md-6 isotope-item popular">
-                                        <Tour />
-                                    </div>
-                                    <div className="col-md-6 isotope-item popular">
-                                        <Tour />
-                                    </div>
-                                    <div className="col-md-6 isotope-item popular">
-                                        <Tour />
-                                    </div>
-                                    <div className="col-md-6 isotope-item popular">
-                                        <Tour />
-                                    </div>
+                                    {this.renderDataHasLoading()}
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        );
-    }
-}
-
-export default Tourpage;
+                );
+            }
+        }
+        
+const mapStateToProps = (state, ownProps) => ({
+                    tour: state.tour.tours,
+                    isLoading: state.tour.isLoading,
+                    categories:state.category.categories
+            })
+const mapDispatchToProps = dispatch => {
+    return {
+                    loadTour: () => dispatch(loadTour()),
+                    loadTourByCategory:(category)=>dispatch(loadTourByCategory(category))
+            }
+        }
+export default connect(mapStateToProps, mapDispatchToProps)(Tourpage);

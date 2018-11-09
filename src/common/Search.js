@@ -61,7 +61,6 @@ class Search extends Component {
                     <div className="col-lg-3 select-center">
                         <Select onChange={this.onChangeCategory} defaultValue="Tours" style={{ border: 'none !important' }}>
                             <Option value="Tours">Tours</Option>
-                            <Option value="Hotels">Hotels</Option>
                         </Select>
                     </div>
                     <div className="col-lg-2">

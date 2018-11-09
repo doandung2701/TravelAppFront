@@ -17,11 +17,12 @@ const initialState={
       return { ...state, err: action.errors };
     case types.LOG_OUT:
       return { ...state, currentUser:null, isAuthenticated: false,userProfle:null };
-  
     case types.START_PROCESSING:
       return { ...state, isLoading: true };
     case types.LOAD_USER_PROFILE:
     return {...state,userProfle:action.userProfle};
+    case types.UPDATE_PROFILE:
+    return {...state,userProfle:action.user}
     case types.FINISH_PROCESSING:
       return { ...state, isLoading: false };
       case types.CLEAR_ERRORS:

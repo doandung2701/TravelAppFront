@@ -6,19 +6,44 @@ class TourHot extends Component {
         super(props);
 
     }
-    
-    render() {
-        return (
-            <section className="hero_in tours start_bg_zoom">
-                <div className="wrapper backgroundTourHot"style={{background:'url(data:image/png;base64,'+this.props.src+")"}}>
-                    <div className="container">
-                        <h1 className="fadeInUp animated"><span />{this.props.content}</h1>
+    renderView=()=>{
+        console.log(typeof this.props.src);
+        if(this.props.src=='undefined'){
+            return (
+                <section className="hero_in tours start_bg_zoom">
+                    <div className="wrapper backgroundTourHot bg-black"style={{background:'url(data:image/png;base64,'+this.props.src+")"}}>
+                        <div className="container">
+                            <h1 className="fadeInUp animated"><span />{this.props.content}</h1>
+                        </div>
+                        {this.props.children}
                     </div>
-                    {this.props.children}
-                </div>
-            </section>
+                </section>
+    
+            );
+        }else{
+            return (
+                <section className="hero_in tours start_bg_zoom">
+                    <div className="wrapper backgroundTourHot bg-black"style={{backgroundImage:'url("/img/contact-banner.jpg")',"background-size": "cover"}}>
+                        <div className="container">
+                            <h1 className="fadeInUp animated"><span />{this.props.content}</h1>
+                        </div>
+                        {this.props.children}
+                    </div>
+                </section>
+    
+            );
+        }
+    }
+    render() {
+        
+   
+           return (
+               <div>
+                   {this.renderView()}
+               </div>
+           )
 
-        );
+    
     }
 }
 const mapStateToProps = (state, ownProps) => ({

@@ -21,10 +21,6 @@ class Aboutpage extends Component {
 
                 </div>
                 </div>
-                <div className="container margin_80_55">
-                <MainTitle title ="Our founders" content="Cum doctus civibus efficiantur in imperdiet deterruisset."/>
-                <FouderList/>
-                </div>
             </div>
         );
     }
