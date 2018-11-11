@@ -23,7 +23,7 @@ class TourHot extends Component {
         }else{
             return (
                 <section className="hero_in tours start_bg_zoom">
-                    <div className="wrapper backgroundTourHot bg-black"style={{backgroundImage:'url("/img/contact-banner.jpg")',"background-size": "cover"}}>
+                    <div className="wrapper backgroundTourHot bg-black"style={{backgroundImage:'url("/img/amazing-beautiful-golf-course-scenery-web-header.jpg")',"background-size": "cover"}}>
                         <div className="container">
                             <h1 className="fadeInUp animated"><span />{this.props.content}</h1>
                         </div>

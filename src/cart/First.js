@@ -4,7 +4,7 @@ import CartListItem from './CartListItem';
 class First extends Component {
     render() {
         return (
-            <div>                            <CartListItem></CartListItem>
+            <div><CartListItem></CartListItem>
                 <div className="cart-options clearfix">
                     <div className="float-left">
                         <div className="apply-coupon">

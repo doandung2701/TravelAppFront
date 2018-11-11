@@ -18,9 +18,14 @@ export const loadTour = () => {
       tours
     }
   };
+  export const StartProcess=()=>{
+    return {
+      type:START_PROCESSING
+    }
+  }
   export const loadTourByID = (tourID) => {
-    return (dispatch) => {
-      return axios.get(`${API_BASE_URL}/tours/${tourID}`)
+    return dispatch => {
+      return  axios.get(`${API_BASE_URL}/tours/${tourID}`)
         .then(response => {
           dispatch(fetchToursByIdSuccess(response.data));
         })
@@ -57,11 +62,9 @@ export const loadTour = () => {
   }
   export const loadTourByCategory=(category)=>{
     return dispatch=>{
-      dispatch({type:START_PROCESSING});
-      return axios.get(`${API_BASE_URL}/tours/category/${category}`)
+     return  axios.get(`${API_BASE_URL}/tours/category/${category}`)
       .then(response => {
         dispatch(fetchTours(response.data));
-        dispatch ({ type:FINISH_PROCESSING });
       }).catch(error => {
         dispatch ({ type:FINISH_PROCESSING });
       throw(error);

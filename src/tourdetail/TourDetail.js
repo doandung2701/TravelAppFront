@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import TourHot from './../common/TourHot';
-import Rating from '../common/Rating';
 import { connect } from 'react-redux';
 import { loadTourByID, createCommentServer } from '../actions/tour.actions';
 import LoadingIndicator from '../common/LoadingIndicator';
-import { Link } from 'react-router-dom';
 import './TourDetail.css';
 import { loadRate } from '../actions/rate.actions';
-import { Select } from 'antd';
+import { Select, Avatar, Menu } from 'antd';
+import { getAvatarColor } from '../util/Colors';
+import { Link } from "react-router-dom";
+import { Slider, InputNumber, Row, Col } from 'antd';
+import { Button } from 'antd';
+import { booking } from '../actions/booking.action';
+
 const Option = Select.Option;
 class TourDetail extends Component {
     constructor(props) {
@@ -17,8 +21,35 @@ class TourDetail extends Component {
         this.loadImage = this.loadImage.bind(this);
         this.state = {
             textComment: "",
-            rateTypeId: 1
+            rateTypeId: 1,
+            numPeople: 1,
+            loading: false,
+            iconLoading: false
         }
+    }
+    enterLoading = () => {
+        this.setState({ loading: true });
+    }
+
+    enterIconLoading = () => {
+        this.setState({ iconLoading: true });
+        const { tourId } = this.props.match.params;
+
+        const data={
+            totalPeople:this.state.numPeople,
+            priceTag:this.props.tourDetail.price,
+            fromDate:this.props.tourDetail.fromDate,
+            toDate:this.props.tourDetail.toDate,
+            tourId:parseInt(tourId)
+        }
+        this.props.booking(data);
+        this.setState({isLoading:false});
+        this.props.history.push("/cart/payment");
+    }
+    onChange = (value) => {
+        this.setState({
+            numPeople: value,
+        });
     }
     componentDidMount = () => {
         const { tourId } = this.props.match.params;
@@ -31,8 +62,8 @@ class TourDetail extends Component {
         if (this.props.tourDetail.rates !== undefined) {
             return this.props.tourDetail.rates.length;
 
-        }else{
-            return  <LoadingIndicator/>
+        } else {
+            return <LoadingIndicator />
         }
     }
 
@@ -58,8 +89,8 @@ class TourDetail extends Component {
 
             )
 
-        }else{
-            return  <LoadingIndicator/>
+        } else {
+            return <LoadingIndicator />
         }
     }
     loadImage() {
@@ -75,8 +106,8 @@ class TourDetail extends Component {
                 )
             );
 
-        }else{
-            return  <LoadingIndicator/>
+        } else {
+            return <LoadingIndicator />
         }
 
     }
@@ -99,8 +130,8 @@ class TourDetail extends Component {
 
             return this.props.tourDetail.locations[0].galleries[0].picture
 
-        }else{
-            return  <LoadingIndicator/>
+        } else {
+            return <LoadingIndicator />
         }
     }
     loadComment = () => {
@@ -124,8 +155,8 @@ class TourDetail extends Component {
             }
             )
 
-        }else{
-            return  <LoadingIndicator/>
+        } else {
+            return <LoadingIndicator />
         }
 
     }
@@ -139,7 +170,7 @@ class TourDetail extends Component {
         const { tourId } = this.props.match.params;
         let payload = {
             commentDetail: this.state.textComment,
-            userId: 1,
+            userId: this.props.user.id,
             tourId: parseInt(tourId),
             rateTypeId: this.state.rateTypeId
         }
@@ -185,7 +216,43 @@ class TourDetail extends Component {
         </form>)
 
     }
+    checkCanFreeSpace = () => {
+        const { numPeople } = this.state;
+        const preespace = this.props.tourDetail.freeSpace;
+        const fromDate = new Date(this.props.tourDetail.fromDate);
+        const toDate = new Date(this.props.tourDetail.toDate);
+        const toDay = new Date();
+        console.log(toDay);
+        console.log(fromDate);
+        if (toDay > fromDate || preespace == 0) {
+            return <p>Sorry.You can not purchase this tour.Because it was sold or expired time</p>
+        }
+        else {
+            return (<div><p>Enter the number of people go with you</p>
+                <Row>
+                    <Col span={12}>
+                        <Slider
+                            min={1}
+                            max={this.props.tourDetail.maximumPeople}
+                            onChange={this.onChange}
+                            value={typeof numPeople === 'number' ? numPeople : 0}
+                        />
+                    </Col>
+                    <Col span={4}>
+                        <p>{numPeople}</p>
+                    </Col>
+                </Row>
+                <Button className="btn_1 full-width purchase" type="primary" icon="check" loading={this.state.iconLoading} onClick={this.enterIconLoading}>
+                    Purchase!
+        </Button>
+                <p> From: {this.props.tourDetail.fromDate}</p>
+                <p> To: {this.props.tourDetail.toDate}</p>
+                <div className="text-center"><small>No money charged in this step</small></div></div>)
+
+        }
+    }
     render() {
+
         if (this.props.isLoading) {
 
             return <LoadingIndicator />
@@ -240,63 +307,73 @@ class TourDetail extends Component {
                                     </div>
                                     <hr />
                                     <div className="reviews-container">
-                                        {this.props.comments.map((value, index) => 
-                                          
-                                                 <div key={value.id} className="review-box clearfix">
-                                                    <div className="rev-content">
+                                        {this.props.comments.map((value, index) =>
 
-                                                        <div className="rev-info">
-                                                            {value.user !== undefined && value.user.name}
-                                                        </div>
-                                                        <div className="rev-text">
-                                                            <p>
-                                                                {value.commentDetail}
-                                                            </p>
-                                                        </div>
+                                            <div key={value.id} className="review-box clearfix">
+                                                <figure className="rev-thumb">
+                                                    <Avatar className="user-avatar-circle" style={{
+                                                        backgroundColor: getAvatarColor(value.user.name),
+                                                        width: "100%",
+                                                        height: "100%",
+                                                        "justifyContent": "center",
+                                                        display: "flex", "alignItems": "center"
+                                                    }}>
+                                                        {value.user.name[0].toUpperCase()}
+                                                    </Avatar>
+                                                </figure>
+                                                <div className="rev-content">
+
+                                                    <div className="rev-info">
+                                                        {value.user !== undefined && value.user.name}
                                                     </div>
-                                                </div>)
-                                            
+                                                    <div className="rev-text">
+                                                        <p>
+                                                            {value.commentDetail}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>)
+
                                         }
                                     </div>
                                     {/* /review-container */}
                                 </section>
-                                    <div className="add-review">
-                                        <h5>Leave a Review</h5>
-                                        {this.showComment()}
-                                    </div>
+                                <div className="add-review">
+                                    <h5>Leave a Review</h5>
+                                    {this.showComment()}
+                                </div>
 
                             </div>
-                                <aside className="col-lg-4" id="sidebar" style={{ position: 'relative', overflow: 'visible', boxSizing: 'border-box', minHeight: 649 }}>
-                                    <div className="theiaStickySidebar" style={{ paddingTop: 0, paddingBottom: 1, transform: 'translateY(-20px)', top: 0, left: '964.6px', width: 350 }}><div className="box_detail booking">
-                                        <div className="price">
-                                            <span>{this.props.tourDetail.price}$ <small>person</small></span>
-                                            <div className="score"><span>Good<em>350 Reviews</em></span><strong>{this.handleRateTour()}</strong></div>
-                                        </div>
-                                        <a href="cart-1.html" className="btn_1 full-width purchase">Purchase</a>
-                                        <a href="wishlist.html" className="btn_1 full-width outline wishlist"><i className="icon_heart" /> Add to wishlist</a>
-                                        <div className="text-center"><small>No money charged in this step</small></div>
+                            <aside className="col-lg-4" id="sidebar" style={{ position: 'relative', overflow: 'visible', boxSizing: 'border-box', minHeight: 649 }}>
+                                <div className="theiaStickySidebar" style={{ paddingTop: 0, paddingBottom: 1, transform: 'translateY(-20px)', top: 0, left: '964.6px', width: 350 }}><div className="box_detail booking">
+                                    <div className="price">
+                                        <span>{this.props.tourDetail.price}$ <small>person</small></span>
+                                        <div className="score"><strong>{this.handleRateTour()}</strong></div>
                                     </div>
-                                    </div></aside>
-                            </div>
+                                    {this.checkCanFreeSpace()}
+                                </div>
+                                </div></aside>
                         </div>
                     </div>
-                    );
-            }
-        }
-        
+                </div>
+            );
+    }
+}
+
 const mapStateToProps = (state, ownProps) => ({
-                        tourDetail: state.tour.tourDetail,
-                    isLoading: state.tour.isLoading,
-                    user: state.auth.currentUser,
-                    rates: state.rate.rates,
-                    comments:state.tour.commnentOfTour,
-                    rateTour:state.tour.rateTour
-                })
+    tourDetail: state.tour.tourDetail,
+    isLoading: state.tour.isLoading,
+    user: state.auth.currentUser,
+    rates: state.rate.rates,
+    comments: state.tour.commnentOfTour,
+    rateTour: state.tour.rateTour
+})
 const mapDispatchToProps = dispatch => {
     return {
-                        loadTour: (id) => dispatch(loadTourByID(id)),
-                    loadRateToComment: () => dispatch(loadRate()),
-                    createCommentToServer:(comment)=>dispatch(createCommentServer(comment))
-                }
-            }
+        loadTour: (id) => dispatch(loadTourByID(id)),
+        loadRateToComment: () => dispatch(loadRate()),
+        createCommentToServer: (comment) => dispatch(createCommentServer(comment)),
+        booking:(data)=>dispatch(booking(data))
+    }
+}
 export default connect(mapStateToProps, mapDispatchToProps)(TourDetail);

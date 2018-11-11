@@ -21,6 +21,7 @@ import Contact from '../contact/Contact';
 import Aboutpage from './../about/Aboutpage';
 import TourDetail from './../tourdetail/TourDetail';
 import Cart from '../cart/Cart';
+import Second from '../cart/Second';
 
 const { Content, Footer } = Layout;
 
@@ -64,7 +65,7 @@ class App extends Component {
                 render={(props) => <Home isAuthenticated={this.props.isAuthenticated}
                   currentUser={this.props.currentUser} handleLogout={this.handleLogout} {...props} />}>
               </Route>
-              <Route path="/tour"
+              <Route path="/tour/:categoryID"
                 render={(props) => <Tourpage isAuthenticated={this.props.isAuthenticated}
                   currentUser={this.props.currentUser} handleLogout={this.handleLogout} {...props} />}>
               </Route>
@@ -77,9 +78,6 @@ class App extends Component {
               <Route path="/tourDetail/:tourId"
                 render={(props) => <TourDetail {...props} />}>
               </Route>
-              <Route path="/cart"
-                render={(props) => <Cart {...props} />}>
-              </Route>
               <Route path="/signup" component={Signup}></Route>
               <Route path="/users/:username"
                 render={(props) => <Profile isAuthenticated={this.props.isAuthenticated} currentUser={this.props.currentUser} {...props} />}>
@@ -88,6 +86,8 @@ class App extends Component {
                 render={(props) => <Login {...props} />}></Route>
               <Route component={NotFound}></Route>
             </Switch>
+            <Route exact path="/cart/payment" render={(props) => <Cart isAuthenticated={this.props.isAuthenticated} currentUser={this.props.currentUser} {...props} />}>
+            </Route>
           </Content>
           {!this.props.isAdmin&&<Footer>
             <FooterPage />

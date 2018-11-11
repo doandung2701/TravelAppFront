@@ -9,7 +9,7 @@ class CartProcess extends Component {
                 <div className="wrapper">
                     <div className="container">
                         <Steps current={this.props.current}>
-                            <Step title="YOUR CART"/>
+                            <Step title="BOOKING"/>
                             <Step title="PAYMENT"/>
                             <Step title="FINISH!"/>
                         </Steps>

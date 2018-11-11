@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { loadCategory, loadTourByCategory } from '../actions';
 import { connect } from 'react-redux';
 import { Radio } from 'antd';
-
-const RadioGroup = Radio.Group;
+import { Link } from 'react-router-dom';
+import { withRouter } from "react-router";
 class SideBar extends Component {
     constructor(props) {
         super(props);
@@ -23,12 +23,6 @@ class SideBar extends Component {
     componentDidMount = () => {
         this.props.loadCategory();
     }
-    onChange=(e)=>{
-        this.setState({
-            value: e.target.value,
-          });
-    this.props.loadTourByCategory(e.target.value);
-    }
     render() {
         return (
             <aside className="col-lg-3" id="sidebar" style={{ position: 'relative', overflow: 'visible', boxSizing: 'border-box', minHeight: 1 }}>
@@ -38,30 +32,29 @@ class SideBar extends Component {
                         <div className="filter_type">
                             <h6>Category</h6>
                             <ul>
-                                <RadioGroup onChange={this.onChange} value={this.state.value}>
-                                    {this.props.categories.map(value => {
-                                        return (<li><Radio value={value.id}>{value.name}</Radio>
-                                            </li>)
-                                    }
-                                    )}
-                                </RadioGroup>
-                            </ul>
+                                {this.props.categories.map(category=>{
+                                    return ( <li>
+                                        <Link to={`/tour/${category.id}`} >{category.name}</Link>
+                                    </li> )
+                                })}
+                               
+								</ul>
                         </div>
                     </div>}
                     {/*/collapse */}
                 </div><div className="resize-sensor" style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0, overflow: 'hidden', zIndex: -1, visibility: 'hidden' }}><div className="resize-sensor-expand" style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0, overflow: 'hidden', zIndex: -1, visibility: 'hidden' }}><div style={{ position: 'absolute', left: 0, top: 0, transition: 'all 0s ease 0s', width: 295, height: 1561 }} /></div><div className="resize-sensor-shrink" style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0, overflow: 'hidden', zIndex: -1, visibility: 'hidden' }}><div style={{ position: 'absolute', left: 0, top: 0, transition: '0s', width: '200%', height: '200%' }} /></div></div></div></aside>
 
-        );
-    }
-}
+                            );
+                        }
+                    }
 const mapStateToProps = (state, ownProps) => ({
-    categories: state.category.categories
-})
+                                categories: state.category.categories
+                        })
 const mapDispatchToProps = dispatch => {
     return {
 
-        loadCategory: () => dispatch(loadCategory())
-       
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
+                                loadCategory: () => dispatch(loadCategory())
+                           
+                        }
+                    }
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SideBar));

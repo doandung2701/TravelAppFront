@@ -3,16 +3,41 @@ import TourHot from '../common/TourHot';
 import SideBar from './SideBar';
 import Tour from '../tour/Tour';
 import { connect } from 'react-redux';
-import { loadTour, loadTourByCategory } from '../actions/tour.actions';
+import { loadTour, loadTourByCategory, StartProcess } from '../actions/tour.actions';
 import LoadingIndicator from '../common/LoadingIndicator';
 class Tourpage extends Component {
+
     componentDidMount = () => {
-        this.props.loadTour();
-    }
-    renderDataHasLoading=()=>{
-        if(this.props.tour.length==0){
-            return <LoadingIndicator/>
+        const {categoryID}=this.props.match.params;
+        if(categoryID==='all'){
+            this.props.loadTour();
         }else{
+            this.props.loadTourByCategory(categoryID);
+        }
+
+        
+       
+    }
+    componentWillReceiveProps(nextProps) {
+
+        
+        if (nextProps.match.params.categoryID !== this.props.match.params.categoryID) {
+            const categoryID = nextProps.match.params.categoryID;
+            if(categoryID==='all'){
+                this.props.loadTour();
+            }else{
+                this.props.loadTourByCategory(categoryID);
+            }
+            
+        }
+      }
+
+
+    renderDataHasLoading=()=>{
+       
+        if (this.props.tour.length==0) {
+            return <LoadingIndicator/>
+          }else{
             return   this.props.tour.map(tour => {
                 return (
                     <div key={tour.id} className="col-md-6 isotope-item popular">
@@ -52,7 +77,8 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch => {
     return {
                     loadTour: () => dispatch(loadTour()),
-                    loadTourByCategory:(category)=>dispatch(loadTourByCategory(category))
+                    loadTourByCategory:(category)=>dispatch(loadTourByCategory(category)),
+                    startProcess:()=>dispatch(StartProcess())
             }
         }
 export default connect(mapStateToProps, mapDispatchToProps)(Tourpage);

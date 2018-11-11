@@ -42,3 +42,7 @@ export const LOAD_TOUR_BY_ID='LOAD_TOUR_BY_ID';
 export const LOAD_RATE='LOAD_RATE';
 //comment
 export const CREATE_COMMENT='CREATE_COMMENT';
+//Booking
+export const BOOKING_STEP_ONE='BOOKING_STEP_ONE';
+export const PAYMENT='PAYMENT';
+export const CLEAR='CLEAR';

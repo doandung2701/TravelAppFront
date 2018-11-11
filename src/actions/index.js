@@ -3,3 +3,4 @@ export * from './provideractions';
 export * from './category.action';
 export * from './tour.actions';
 export * from './rate.actions';
+export * from './booking.action';
