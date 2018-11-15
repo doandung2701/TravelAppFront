@@ -5,10 +5,10 @@ import { loadTourByID, createCommentServer } from '../actions/tour.actions';
 import LoadingIndicator from '../common/LoadingIndicator';
 import './TourDetail.css';
 import { loadRate } from '../actions/rate.actions';
-import { Select, Avatar, Menu } from 'antd';
+import { Select, Avatar } from 'antd';
 import { getAvatarColor } from '../util/Colors';
 import { Link } from "react-router-dom";
-import { Slider, InputNumber, Row, Col } from 'antd';
+import { Slider, Row, Col } from 'antd';
 import { Button } from 'antd';
 import { booking } from '../actions/booking.action';
 
@@ -99,7 +99,7 @@ class TourDetail extends Component {
                 value.galleries.map(value2 =>
                     (
                         <img key={value2.id} className="thumbnail" src={"data:image/png;base64," + value2.picture} height="100" width="100"
-                            style={{ margin: '1% 1%' }}></img>
+                            style={{ margin: '1% 1%' }} alt="this  in tour detail"></img>
 
                     )
 
@@ -115,6 +115,7 @@ class TourDetail extends Component {
         var some = 0;
         var count = 0;
         if (this.props.rateTour !== undefined) {
+            // eslint-disable-next-line
             this.props.rateTour.map(rate => {
                 count++;
                 some = some + rate.rateType.id;
@@ -222,8 +223,6 @@ class TourDetail extends Component {
         const fromDate = new Date(this.props.tourDetail.fromDate);
         const toDate = new Date(this.props.tourDetail.toDate);
         const toDay = new Date();
-        console.log(toDay);
-        console.log(fromDate);
         if (toDay > fromDate || preespace == 0) {
             return <p>Sorry.You can not purchase this tour.Because it was sold or expired time</p>
         }
@@ -255,6 +254,9 @@ class TourDetail extends Component {
 
         if (this.props.isLoading) {
 
+            return <LoadingIndicator />
+        }
+        if(this.props.rateTour.length==0){
             return <LoadingIndicator />
         }
         if (!this.props.isLoading)

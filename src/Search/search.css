@@ -1,0 +1,32 @@
+
+.myClass div{
+    height: 100%;
+    border-radius: 0!important;
+}
+.myClass div div div{
+    align-items: center;
+    justify-content: center;
+    display: flex!important;
+    font-weight: bold;
+    color: #495057ab;
+}
+.ant-calendar-picker{
+    width: 100%;
+}
+.ant-calendar-range-picker-input{
+    border-right: 0 !important;
+}
+.ant-calendar-picker-input.ant-input{
+    height: 100% !important;
+}
+
+.anticon.anticon-cross-circle.ant-calendar-picker-clear{
+    top :11px !important;
+
+}
+.ant-calendar-range-picker-separator{
+    vertical-align:text-top!important;
+}
+.ant-calendar-picker-input .ant-input{
+    border-radius: 0 !important;
+}

@@ -2479,7 +2479,6 @@ video {
 
 @media (max-width: 1024px) {
   #hero_video {
-    background: #ccc url(../img/home_section_1.jpg);
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;

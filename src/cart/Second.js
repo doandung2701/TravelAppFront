@@ -77,8 +77,8 @@ class Second extends Component {
         return !(this.state.cardNumber.validateStatus === 'success' &&
             this.state.expirationDate.validateStatus === 'success' &&
             this.state.securityCode.validateStatus === 'success' &&
-            this.props.fromDate != undefined&&
-            this.props.fromDate!=''
+            this.props.fromDate !== undefined&&
+            this.props.fromDate!==''
         );
     }
     validateCardName = (name) => {
@@ -102,7 +102,7 @@ class Second extends Component {
     }
     validateCardNumber = (number) => {
         var cardNo = /^\d{16}$/;
-        if (number.length != 16) {
+        if (number.length !== 16) {
             return {
                 validateStatus: 'error',
                 errorMsg: `Card number need 16 numbers`

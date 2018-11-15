@@ -21,7 +21,7 @@ import Contact from '../contact/Contact';
 import Aboutpage from './../about/Aboutpage';
 import TourDetail from './../tourdetail/TourDetail';
 import Cart from '../cart/Cart';
-import Second from '../cart/Second';
+import Search from '../Search/Search';
 
 const { Content, Footer } = Layout;
 
@@ -71,6 +71,9 @@ class App extends Component {
               </Route>
               <Route path="/contact"
                 render={(props) => <Contact {...props} />}>
+              </Route>
+              <Route path="/search"
+                render={(props) => <Search {...props} />}>
               </Route>
               <Route path="/about"
                 render={(props) => <Aboutpage {...props} />}>

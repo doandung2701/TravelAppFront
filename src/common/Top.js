@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './Top.css';
-import Search from  './Search';
 class Top extends Component {
     constructor(props) {
         super(props);
@@ -24,7 +23,6 @@ class Top extends Component {
                 <div className="container">
                   <h3>Book unique experiences</h3>
                   <p>Expolore top rated tours, hotels around the world</p>
-                  <Search/>
                 </div>
               </div>
             </div>

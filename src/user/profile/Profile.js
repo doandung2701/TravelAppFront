@@ -9,16 +9,12 @@ import ServerError from '../../common/ServerError';
 import { connect } from "react-redux";
 import { getUserProfile, updateProfile } from '../../actions/user.actions';
 import ProfileDetail from './ProfileDetail';
+import ListBookingTour from './ListBookingTour';
 const TabPane = Tabs.TabPane;
 const tabBarStyle = {
     textAlign: 'center'
 };
 class Profile extends Component {
-    constructor(props) {
-        super(props);
-
-    }
-
     componentDidMount = () => {
         this.props.getUserProfile(this.props.match.params.username);
     }
@@ -30,7 +26,7 @@ class Profile extends Component {
                 size="large"
                 className="profile-tabs">
                 <TabPane tab={`${this.props.userProfle.bookings.length} booking`} key="2">
-                    <ProfileDetail user={this.props.userProfle} type="USER_BOOKED" />
+                    <ListBookingTour tours={this.props.userProfle} type="USER_BOOKED" />
                 </TabPane>
                 <TabPane tab="update profile" key="3">
                     <ProfileDetail user={this.props.userProfle} update={updateProfileRequest=>this.props.updateProfile(updateProfileRequest)} type="USER_PROFILE_UPDATE" />
@@ -51,7 +47,6 @@ class Profile extends Component {
         }
     }
     render() {
-
         if (this.props.notFound) {
             return <NotFound />;
         }
@@ -60,7 +55,7 @@ class Profile extends Component {
             return <ServerError />;
         }
         return (
-
+           
             <div className="profile">
                 {
                     this.props.user ? (

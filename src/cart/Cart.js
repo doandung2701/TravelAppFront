@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import CartProcess from './CartProcess';
 import Second from './Second';
-import {
-
-    Route,
-    Switch
-} from 'react-router-dom';
 class Cart extends Component {
     constructor(props) {
         super(props);

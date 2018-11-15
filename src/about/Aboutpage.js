@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import MainTitle from '../common/MainTitle';
 import Result from '../common/Result';
 import TourHot from './../common/TourHot';
-import FouderList from './FouderList';
-
 class Aboutpage extends Component {
     render() {
         return (

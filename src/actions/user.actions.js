@@ -53,6 +53,7 @@ export function Logout() {
 export function signup(signupRequest) {
     return dispatch=>{
         dispatch({type:START_PROCESSING});
+        // eslint-disable-next-line
         request({
             url: API_BASE_URL + "/auth/signup",
             method: 'POST',

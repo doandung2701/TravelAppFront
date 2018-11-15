@@ -28,8 +28,8 @@ class AppHeader extends Component {
             <Icon type="home" className="nav-icon" />
           </Link>
         </Menu.Item>,
-        <Menu.Item key="/tour/all">
-          <Link to="/tour/all">
+        <Menu.Item key="/search">
+          <Link to="/search">
             Tour
              </Link>
         </Menu.Item>,

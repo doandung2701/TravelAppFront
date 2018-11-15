@@ -38,6 +38,7 @@ export const LOAD_CATEGORY='LOAD_CATEGORY';
 //tour
 export const LOAD_TOUR='LOAD_TOUR';
 export const LOAD_TOUR_BY_ID='LOAD_TOUR_BY_ID';
+export const SEARCH_TOUR='SEARCH_TOUR';
 //rate
 export const LOAD_RATE='LOAD_RATE';
 //comment
@@ -46,3 +47,6 @@ export const CREATE_COMMENT='CREATE_COMMENT';
 export const BOOKING_STEP_ONE='BOOKING_STEP_ONE';
 export const PAYMENT='PAYMENT';
 export const CLEAR='CLEAR';
+///EROR
+export const ERROR_SEARCH_TOUR="ERROR_SEARCH_TOUR";
+export const FETCH_ALL_TOUR="FETCH_ALL_TOUR";

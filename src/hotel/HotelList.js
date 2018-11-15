@@ -5,7 +5,7 @@ import LoadingIndicator from '../common/LoadingIndicator';
 class TourListInline extends Component {
     displayTour=()=>{
         if (this.props.tours!=null) {
-            if (this.props.tours.length==0) {
+            if (this.props.tours.length===0) {
                 return (<LoadingIndicator/>)
             }
            return this.props.tours.map(tour => {
